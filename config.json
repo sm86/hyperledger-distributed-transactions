@@ -1,16 +1,37 @@
 {
   "source": {
     "ca_client": {
-      "host": "http://localhost:7054",
-      "name" : "ca.example.com" 
+      "host": "http://localhost:6054",
+      "name" : "ca.testnet.com" 
     },
     "peers" :{
       "host" : "localhost",
-      "port": 7051    
+      "port": 6051    
       },
     "username": "user3",
+    "mspid" : "Org2MSP",
+    "affiliation": "org2.department1",
+    "channel" : "myChannel"
+  },
+  "destination": {
+    "ca_client": {
+      "host": "http://localhost:7054",
+      "name" : "ca.example.com" 
+    },
+    "peer" :{
+      "host" : "localhost",
+      "port": 7051,
+      "eventhub_port": 7053    
+    },
+    "orderer" :{
+      "host" : "localhost",
+      "port": 7050    
+    },
+    "username": "user2",
     "mspid" : "Org1MSP",
     "affiliation": "org1.department1",
-    "channel" : "myChannel"
+    "channel" : "myChannel",
+    "chaincodeId": "taxChain",
+    "fcn" : "recordTax"
   }
 }
