@@ -1,10 +1,7 @@
 'use strict';
-/*
-* Copyright IBM Corp All Rights Reserved
-*
-* SPDX-License-Identifier: Apache-2.0
-*/
-
+var tx_db = require('../db/tx_db');
+exports.invokeTransaction = function(tx,cb){
+	
 var Fabric_Client = require('fabric-client');
 var path = require('path');
 var util = require('util');
@@ -47,10 +44,11 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	tx_id = fabric_client.newTransactionID();
 	console.log("Assigning transaction_id: ", tx_id._transaction_id);
 	// must send the proposal to endorsing peers
+	
 	var request = {
 		chaincodeId: config.destination.chaincodeId,
 		fcn: config.destination.fcn,
-		args: ['TG0001', 'Gold', '500','ABC Jewellers','0','nil','R12'],
+		args: ['TG0004', 'Gold', '500',tx._id,'0','','R12'],
 		chainId: config.destination.channel,
 		txId: tx_id
 	};
@@ -131,3 +129,11 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 }).catch((err) => {
 	console.error('Failed to invoke successfully :: ' + err);
 });
+tx_db.updateStatus(tx, 1, function(err) {  
+	if (err) {
+	  throw err;
+	}
+	console.log(tx._id +" status updated to 1");
+});
+	cb(null,null);
+}
