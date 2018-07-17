@@ -1,17 +1,17 @@
 {
   "source": {
     "ca_client": {
-      "host": "http://localhost:6054",
-      "name" : "ca.testnet.com" 
+      "host": "http://localhost:7054",
+      "name" : "ca.example.com" 
     },
     "peers" :{
       "host" : "localhost",
-      "port": 6051    
+      "port": 7051    
       },
-    "username": "user3",
-    "mspid" : "Org2MSP",
-    "affiliation": "org2.department1",
-    "channel" : "myChannel"
+    "username": "user2",
+    "mspid" : "Org1MSP",
+    "affiliation": "org1.department1",
+    "channel" : "mychannel"
   },
   "destination": {
     "ca_client": {
@@ -33,5 +33,32 @@
     "channel" : "myChannel",
     "chaincodeId": "taxChain",
     "fcn" : "recordTax"
-  }
+  },
+  "object" : [
+	  	{
+	  		"attribute" : "SSN",
+        "value" : "tx_base.value.owner",
+        "isConstant" : false
+	  	},
+	  	{
+	  		"attribute" : "Asset",
+        "value" : "CAR",
+        "isConstant" : true
+	  	},
+	  	{
+	  		"attribute" : "Reference",
+        "value" : "tx_base.key",
+        "isConstant" : false
+	  	},
+	  	{
+	  		"attribute" : "Comments",
+        "value" : "fabcar-tss",
+        "isConstant" : true 	
+	  	},
+	  	{
+	  		"attribute" : "taxAmount",
+        "value" : "15000",
+        "isConstant" : true
+	  	}
+	]
 }
