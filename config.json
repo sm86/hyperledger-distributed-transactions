@@ -34,31 +34,68 @@
     "chaincodeId": "taxChain",
     "fcn" : "recordTax"
   },
-  "object" : [
-	  	{
-	  		"attribute" : "SSN",
-        "value" : "tx_base.value.owner",
-        "isConstant" : false
-	  	},
-	  	{
-	  		"attribute" : "Asset",
-        "value" : "CAR",
-        "isConstant" : true
-	  	},
-	  	{
-	  		"attribute" : "Reference",
-        "value" : "tx_base.key",
-        "isConstant" : false
-	  	},
-	  	{
-	  		"attribute" : "Comments",
-        "value" : "fabcar-tss",
-        "isConstant" : true 	
-	  	},
-	  	{
-	  		"attribute" : "taxAmount",
-        "value" : "15000",
-        "isConstant" : true
-	  	}
-	]
+  "mapping" : [
+    {
+      "filtering_criteria": "writeset.value.colour=='Blue'",
+      "function" : "recordTax",
+      "object" : [
+        {
+          "argument" : "SSN",
+          "value" : "writeset.value.owner",
+          "type" : "variable"
+        },
+        {
+          "argument" : "Asset",
+          "value" : "CAR-BLUE",
+          "type" : "constant"
+        },
+        {
+          "argument" : "Reference",
+          "value" : "writeset.key",
+          "type" : "variable"
+        },
+        {
+          "argument" : "Comments",
+          "value" : "fabcar-tss",
+          "type" : "constant" 	
+        },
+        {
+          "argument" : "taxAmount",
+          "value" : "15000",
+          "type" : "constant"
+        }
+      ]
+    },
+    {
+      "filtering_criteria": "writeset.value.colour=='Red'",
+      "function" : "recordTax",
+      "object" : [
+        {
+          "argument" : "SSN",
+          "value" : "writeset.value.owner",
+          "type" : "variable"
+        },
+        {
+          "argument" : "Asset",
+          "value" : "CAR-RED",
+          "type" : "constant"
+        },
+        {
+          "argument" : "Reference",
+          "value" : "writeset.key.substr(3)",
+          "type" : "variable"
+        },
+        {
+          "argument" : "Comments",
+          "value" : "fabcar-tss",
+          "type" : "constant" 	
+        },
+        {
+          "argument" : "taxAmount",
+          "value" : "15000",
+          "type" : "constant"
+        }
+      ]
+    }
+  ]
 }

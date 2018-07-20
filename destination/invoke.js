@@ -1,6 +1,6 @@
 'use strict';
 var tx_db = require('../db/tx_db');
-exports.invokeTransaction = function(tx,cb){
+exports.invokeTransaction = function(tx,fcn_name,cb){
 	
 var Fabric_Client = require('fabric-client');
 var path = require('path');
@@ -47,8 +47,8 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	
 	var request = {
 		chaincodeId: config.destination.chaincodeId,
-		fcn: config.destination.fcn,
-		args: ['TG0004', 'Gold', '500',tx._id,'0','','R12'],
+		fcn: fcn_name,
+		args: ['TG0004', 'Gold', '500',tx._id,'','R12'],
 		chainId: config.destination.channel,
 		txId: tx_id
 	};

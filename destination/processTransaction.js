@@ -1,6 +1,6 @@
 var tx_db = require('../db/tx_db');
 var invoke = require('./invoke.js');
-
+var config = require('../config.json');
 tx_db.getOldestTransaction(function(err, data) {  
   if (err) {
     throw err;
@@ -9,19 +9,32 @@ tx_db.getOldestTransaction(function(err, data) {
   
   processTransaction(data[0]);
 });
-function processTransaction(tx) {  
-  console.log("Processing transaction")
-  var tx_base = tx.tx_object.payload.action.proposal_response_payload.extension.results.ns_rwset[0].rwset.writes[0];
-  tx_base.value = JSON.parse(tx_base.value);
+function processTransaction(tx) {
+  tx.tx_object.payload.action.proposal_response_payload.extension.results.ns_rwset[0].rwset.writes[0].value = JSON.parse(tx.tx_object.payload.action.proposal_response_payload.extension.results.ns_rwset[0].rwset.writes[0].value);  
+  var writeset = tx.tx_object.payload.action.proposal_response_payload.extension.results.ns_rwset[0].rwset.writes[0];
   
+  var fcn = null;
   var transaction = {};
-  for(i =0; i<config.object.length;i++){
-      if(config.object[i].isConstant)
-          transaction[config.object[i].attribute] = config.object[i].value;
-      else
-          transaction[config.object[i].attribute] = eval(config.object[i].value);
+
+  for(j=0;j<config.mapping.length;j++){
+      var isCriteriaMet = eval(config.mapping[j].filtering_criteria);
+      if(isCriteriaMet){
+        fcn = config.mapping[j].function;
+        for(i =0; i<config.mapping[j].object.length;i++){
+          if(config.mapping[j].object[i].type==("constant"))
+              transaction[config.mapping[j].object[i].argument] = config.mapping[j].object[i].value;
+          else if(config.mapping[j].object[i].type==("variable"))
+              transaction[config.mapping[j].object[i].argument] = eval(config.mapping[j].object[i].value);
+          else
+              console.log("ERROR");
+        }
+        break;
+      }
   }
-  invoke.invokeTransaction(transaction, function(err) {  
+  console.log("Destination function: "+fcn);
+  console.log(transaction);
+  
+  invoke.invokeTransaction(transaction,fcn, function(err) {  
     if (err) {
       throw err;
     }
