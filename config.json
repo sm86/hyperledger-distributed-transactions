@@ -1,13 +1,20 @@
 {
   "source": {
-    "ca_client": {
-      "host": "http://localhost:7054",
-      "name" : "ca.example.com" 
-    },
-    "peers" :{
-      "host" : "localhost",
-      "port": 7051    
+    "ca_client": [{
+        "host": "http://localhost:7054",
+        "name" : "ca.example.com" 
+      }
+    ],
+    "peers" :[
+      {
+        "host" : "localhost",
+        "port": 7051    
       },
+      {
+        "host" : "localhost",
+        "port": 7051    
+      }
+    ],
     "username": "user2",
     "mspid" : "Org1MSP",
     "affiliation": "org1.department1",

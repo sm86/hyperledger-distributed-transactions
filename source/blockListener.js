@@ -2,16 +2,16 @@ var Fabric_Client = require('fabric-client');
 
 var fabric_client = new Fabric_Client();
 var path = require('path');
-var util = require('util');
 
 var recordTransactions = require('../recordTransactions');
 var config = require('../config.json');
 
-var member_user = null;
+var peer_id =0;
+
 var store_path = path.join(__dirname, 'hfc-key-store');
 console.log('Store path:'+store_path);
 
-var peer = fabric_client.newPeer('grpc://'+config.source.peers.host+':'+config.source.peers.port);
+var peer = fabric_client.newPeer('grpc://'+config.source.peers[peer_id].host+':'+config.source.peers[peer_id].port);
 
 Fabric_Client.newDefaultKeyValueStore({ path: store_path
 }).then((state_store) => {
@@ -40,7 +40,8 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 		channel_event_hub.connect(true);
 		channel_event_hub.registerBlockEvent(
   		(block) => {
-		   	recordTransactions.recordTransactionsFromBlocks(block,config.source.peers.host+':'+config.source.peers.port,function(err) {
+			var source_formatted = config.source.peers[0].host+':'+config.source.peers[0].port;
+		   	recordTransactions.recordTransactionsFromBlocks(block,source_formatted,function(err) {
 				if (err) {
 				    throw err;
 				  }

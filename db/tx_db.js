@@ -25,3 +25,18 @@ exports.updateStatus = function updateStatus(tx,status, cb) {
   tx.status = status;
   db.insert(tx, tx.tx_id,cb);
 }
+
+exports.update = function update(tx, cb) {  
+  db.insert(tx, tx.tx_id,cb);
+}
+exports.getTransactionByID = function getOldestUnprocessedTransaction(tx_id,cb) {  
+  db.get(tx_id, function (err, result){           
+      if (err) {
+        cb(err);
+      }
+      else {
+        cb(null,result);
+        return result;
+      }
+  });
+}
