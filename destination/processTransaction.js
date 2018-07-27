@@ -35,7 +35,6 @@ function processTransaction(tx) {
           else
               console.log("ERROR");
         }
-        break;
       }
   }
   if(fcn==null || chaicodeId==null){

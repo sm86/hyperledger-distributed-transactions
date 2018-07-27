@@ -3,7 +3,7 @@ var Fabric_Client = require('fabric-client');
 var fabric_client = new Fabric_Client();
 var path = require('path');
 
-var recordTransactions = require('../recordTransactions');
+var recordTransactions = require('./recordTransactions');
 var config = require('../config.json');
 
 var peer_id =0;
@@ -33,14 +33,11 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	var channel_event_hub = channel.newChannelEventHub(peer);
 
 		let txPromise = new Promise((resolve, reject) => {
-			let handle = setTimeout(() => {
-				channel_event_hub.disconnect();
-				resolve({event_status : 'TIMEOUT'});
-			}, 300000);
+
 		channel_event_hub.connect(true);
 		channel_event_hub.registerBlockEvent(
   		(block) => {
-			var source_formatted = config.source.peers[0].host+':'+config.source.peers[0].port;
+			var source_formatted = config.source.peers[peer_id].host+':'+config.source.peers[peer_id].port;
 		   	recordTransactions.recordTransactionsFromBlocks(block,source_formatted,function(err) {
 				if (err) {
 				    throw err;
