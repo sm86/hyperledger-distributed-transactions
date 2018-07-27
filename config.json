@@ -21,30 +21,37 @@
     "channel" : "mychannel"
   },
   "destination": {
-    "ca_client": {
+    "ca_client": [
+      {
       "host": "http://localhost:7054",
       "name" : "ca.example.com" 
-    },
-    "peer" :{
-      "host" : "localhost",
-      "port": 7051,
-      "eventhub_port": 7053    
-    },
-    "orderer" :{
-      "host" : "localhost",
-      "port": 7050    
-    },
+      }
+    ],
+    "peers" : [
+      {
+        "host" : "localhost",
+        "port": 7051,
+        "eventhub_port": 7053    
+      }
+    ],
+    "orderers" :[
+      {
+        "host" : "localhost",
+        "port": 7050    
+      }
+    ],
+    "threshold": 1,
     "username": "user2",
     "mspid" : "Org1MSP",
     "affiliation": "org1.department1",
-    "channel" : "myChannel",
-    "chaincodeId": "taxChain",
-    "fcn" : "recordTax"
+    "channel" : "myChannel"
+
   },
   "mapping" : [
     {
       "filtering_criteria": "writeset.value.colour=='Blue'",
       "function" : "recordTax",
+      "chaincodeId": "taxChain",
       "object" : [
         {
           "argument" : "SSN",
@@ -54,6 +61,11 @@
         {
           "argument" : "Asset",
           "value" : "CAR-BLUE",
+          "type" : "constant"
+        },
+        {
+          "argument" : "taxAmount",
+          "value" : "15000",
           "type" : "constant"
         },
         {
@@ -67,15 +79,17 @@
           "type" : "constant" 	
         },
         {
-          "argument" : "taxAmount",
-          "value" : "15000",
-          "type" : "constant"
+          "argument" : "ID",
+          "value" : "tx._id",
+          "type" : "variable" 	
         }
+        
       ]
     },
     {
       "filtering_criteria": "writeset.value.colour=='Red'",
       "function" : "recordTax",
+      "chaincodeId": "taxChain",
       "object" : [
         {
           "argument" : "SSN",
@@ -85,6 +99,11 @@
         {
           "argument" : "Asset",
           "value" : "CAR-RED",
+          "type" : "constant"
+        },
+        {
+          "argument" : "taxAmount",
+          "value" : "15000",
           "type" : "constant"
         },
         {
@@ -98,9 +117,9 @@
           "type" : "constant" 	
         },
         {
-          "argument" : "taxAmount",
-          "value" : "15000",
-          "type" : "constant"
+          "argument" : "ID",
+          "value" : "tx._id",
+          "type" : "variable"
         }
       ]
     }
