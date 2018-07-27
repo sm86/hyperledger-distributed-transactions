@@ -1,6 +1,6 @@
 'use strict';
 var tx_db = require('../db/tx_db');
-exports.invokeTransaction = function(tx,fcn_name,cb){
+exports.invokeTransaction = function(tx,fcn_name,chaincodeId,cb){
 	
 var Fabric_Client = require('fabric-client');
 var path = require('path');
@@ -11,12 +11,16 @@ var fabric_client = new Fabric_Client();
 
 // setup the fabric network
 var channel = fabric_client.newChannel('mychannel');
-var peer = fabric_client.newPeer('grpc://'+config.destination.peer.host+':'+config.destination.peer.port);
-channel.addPeer(peer);
-var order = fabric_client.newOrderer('grpc://'+config.destination.orderer.host+':'+config.destination.orderer.port);
-channel.addOrderer(order);
+for(i =0; i<config.destination.peers.length;i++){
+	var peer = fabric_client.newPeer('grpc://'+config.destination.peers[i].host+':'+config.destination.peers[i].port);
+	channel.addPeer(peer);
+}
 
-var member_user = null;
+for(i =0; i<config.destination.orderers.length;i++){
+	var order = fabric_client.newOrderer('grpc://'+config.destination.orderers[i].host+':'+config.destination.orderers[i].port);
+	channel.addOrderer(order);
+}
+
 var store_path = path.join(__dirname, 'hfc-key-store');
 console.log('Store path:'+store_path);
 var tx_id = null;
@@ -46,9 +50,9 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	// must send the proposal to endorsing peers
 	
 	var request = {
-		chaincodeId: config.destination.chaincodeId,
+		chaincodeId: chaincodeId,
 		fcn: fcn_name,
-		args: ['TG0004', 'Gold', '500',tx._id,'','R12'],
+		args: tx,
 		chainId: config.destination.channel,
 		txId: tx_id
 	};
