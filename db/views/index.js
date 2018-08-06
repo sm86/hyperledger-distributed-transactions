@@ -2,7 +2,7 @@ var async = require('async');
 var equal = require('deep-equal');  
 var couch = require('../couchdb');
 
-var databaseNames = ['tss_logs'];
+var databaseNames = ['tss_queue'];
 
 var views = {};
 

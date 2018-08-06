@@ -2,7 +2,7 @@ var async = require('async');
 var couch = require('./couchdb');
 var views = require('./views');
 
-var databases = ['tss_logs'];
+var databases = ['tss_failed_logs','tss_queue','tss_success_logs'];
 
 module.exports = initCouch;
 
@@ -26,3 +26,4 @@ function createDatabase(db, cb) {
     cb(err);
   });
 }
+
