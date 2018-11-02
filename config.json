@@ -10,10 +10,6 @@
         "host" : "localhost",
         "port": 7051 ,
         "name" : "peer0.org1.example.com"   
-      },
-      {
-        "host" : "localhost",
-        "port": 7051    
       }
     ],
     "username": "user1",
@@ -25,25 +21,19 @@
   "destination": {
     "ca_client": [
       {
-      "host": "http://localhost:7054",
-      "name" : "ca.example.com" 
+      "host": "https://localhost:6054",
+      "name" : "ca-org1-destination" 
       }
     ],
     "peers" : [
       {
         "host" : "localhost",
-        "port": 7051,
-        "eventhub_port": 7053    
+        "port": 6051,
+        "eventhub_port": 6053    
       }
     ],
-    "orderers" :[
-      {
-        "host" : "localhost",
-        "port": 7050    
-      }
-    ],
-   
     "username": "user2",
+    "threshold": 1,
     "mspid" : "Org1MSP",
     "affiliation": "org1.department1",
     "channel" : "myChannel"
@@ -56,28 +46,23 @@
       "chaincodeId": "mycc",
       "object" : [
         {
-          "argument" : "Owner",
-          "value" : "writeset.Owner",
-          "type" : "variable"
-        },
-        {
-          "argument" : "Type",
-          "value" : "Dark Car",
-          "type" : "constant"
-        },
-        {
-          "argument" : "key",
           "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
           "type" : "variable"
         },
         {
-          "argument" : "Comments",
-          "value" : "tss-shipped",
+          "value": "owner",
+          "type": "constant"
+        },
+        {
+          "value" : "writeset.Owner",
+          "type" : "variable"
+        },
+        {
+          "value" : "reference",
           "type" : "constant" 	
         },
         {
-          "argument" : "tx_id",
-          "value" : "tx._id",
+          "value" : "record._id",
           "type" : "variable" 	
         }
       ]
@@ -88,28 +73,23 @@
       "chaincodeId": "mycc",
       "object" : [
         {
-          "argument" : "Owner",
-          "value" : "writeset.Owner",
-          "type" : "variable"
-        },
-        {
-          "argument" : "Type",
-          "value" : "Black Car",
-          "type" : "constant"
-        },
-        {
-          "argument" : "key",
           "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
           "type" : "variable"
         },
         {
-          "argument" : "Comments",
-          "value" : "tss-shipped",
+          "value": "owner",
+          "type": "constant"
+        },
+        {
+          "value" : "writeset.Owner",
+          "type" : "variable"
+        },
+        {
+          "value" : "reference",
           "type" : "constant" 	
         },
         {
-          "argument" : "tx_id",
-          "value" : "tx._id",
+          "value" : "record._id",
           "type" : "variable" 	
         }
       ]
@@ -120,28 +100,23 @@
       "chaincodeId": "mycc",
       "object" : [
         {
-          "argument" : "Owner",
-          "value" : "writeset.Owner",
-          "type" : "variable"
-        },
-        {
-          "argument" : "Type",
-          "value" : "Dark Car",
-          "type" : "constant"
-        },
-        {
-          "argument" : "key",
           "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
           "type" : "variable"
         },
         {
-          "argument" : "Comments",
-          "value" : "tss-shipped",
+          "value": "owner",
+          "type": "constant"
+        },
+        {
+          "value" : "writeset.Owner",
+          "type" : "variable"
+        },
+        {
+          "value" : "reference",
           "type" : "constant" 	
         },
         {
-          "argument" : "tx_id",
-          "value" : "tx._id",
+          "value" : "record._id",
           "type" : "variable" 	
         }
       ]
@@ -152,28 +127,23 @@
       "chaincodeId": "mycc",
       "object" : [
         {
-          "argument" : "Owner",
-          "value" : "writeset.Owner",
-          "type" : "variable"
-        },
-        {
-          "argument" : "Type",
-          "value" : "Dark Car",
-          "type" : "constant"
-        },
-        {
-          "argument" : "key",
           "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
           "type" : "variable"
         },
         {
-          "argument" : "Comments",
-          "value" : "tss-shipped",
+          "value": "owner",
+          "type": "constant"
+        },
+        {
+          "value" : "writeset.Owner",
+          "type" : "variable"
+        },
+        {
+          "value" : "reference",
           "type" : "constant" 	
         },
         {
-          "argument" : "tx_id",
-          "value" : "tx._id",
+          "value" : "record._id",
           "type" : "variable" 	
         }
       ]

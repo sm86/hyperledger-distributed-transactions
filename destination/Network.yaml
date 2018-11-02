@@ -1,0 +1,116 @@
+version: "1.0"
+
+
+
+channels:
+  mychannel:
+    orderers:
+      - orderer.test.com
+    peers:
+      peer0.org1.test.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.org1.test.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+      peer0.org2.test.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+      peer1.org2.test.com:
+        endorsingPeer: false
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+organizations:
+  Org1:
+    mspid: Org1MSP
+    peers:
+      - peer0.org1.test.com
+      - peer1.org1.test.com
+    certificateAuthorities:
+      - ca-org1-destination
+    adminPrivateKey:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org1.test.com/users/Admin@org1.test.com/msp/keystore/fee2275427458f6871ae519c1c3b925b7f4c0f49aa8c5d4e03998757592d693b_sk
+    signedCert:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org1.test.com/users/Admin@org1.test.com/msp/signcerts/Admin@org1.test.com-cert.pem
+
+  Org2:
+    mspid: Org2MSP
+    peers:
+      - peer0.org2.test.com
+      - peer1.org2.test.com
+    certificateAuthorities:
+      - ca-org2-destination
+    adminPrivateKey:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org2.test.com/users/Admin@org2.test.com/msp/keystore/8789b5506d2e1fc486bdf208a7a4169b5605b21aedd18aa9fffad7c8b2e51904_sk
+    signedCert:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org2.test.com/users/Admin@org2.test.com/msp/signcerts/Admin@org2.test.com-cert.pem
+
+orderers:
+  orderer.test.com:
+    url: grpcs://localhost:6050
+    grpcOptions:
+      ssl-target-name-override: orderer.test.com
+      grpc-max-send-message-length: -1
+    tlsCACerts:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/ordererOrganizations/test.com/tlsca/tlsca.test.com-cert.pem
+
+peers:
+  peer0.org1.test.com:
+    url: grpcs://localhost:6051
+    grpcOptions:
+      ssl-target-name-override: peer0.org1.test.com
+      grpc.keepalive_time_ms: 600000
+    tlsCACerts:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org1.test.com/peers/peer0.org1.test.com/msp/tlscacerts/tlsca.org1.test.com-cert.pem
+  peer1.org1.test.com:
+    url: grpcs://localhost:5051
+    grpcOptions:
+      ssl-target-name-override: peer1.org1.test.com
+      grpc.keepalive_time_ms: 600000
+    tlsCACerts:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org1.test.com/peers/peer1.org1.test.com/msp/tlscacerts/tlsca.org1.test.com-cert.pem
+
+  peer0.org2.test.com:
+    url: grpcs://localhost:4051
+    grpcOptions:
+      ssl-target-name-override: peer0.org2.test.com
+    tlsCACerts:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org2.test.com/peers/peer0.org2.test.com/msp/tlscacerts/tlsca.org2.test.com-cert.pem
+
+  peer1.org2.test.com:
+    url: grpcs://localhost:3051
+    grpcOptions:
+      ssl-target-name-override: peer1.org2.test.com
+    tlsCACerts:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org2.test.com/peers/peer1.org2.test.com/msp/tlscacerts/tlsca.org2.test.com-cert.pem
+
+certificateAuthorities:
+  ca-org1-destination:
+    url: https://localhost:6054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org1.test.com/ca/ca.org1.test.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca-org1-destination
+
+  ca-org2-destination:
+    url: https://localhost:5054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /home/shashank/Documents/distributed-transactions/fabric-samples/final-network/crypto-config/peerOrganizations/org2.test.com/ca/ca.org2.test.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca-org2-destination

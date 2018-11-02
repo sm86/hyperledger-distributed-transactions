@@ -25,3 +25,9 @@ This section is responsible for listening to transactions on the channel, filter
 
 ### Destination
 This section is responsible for retrieving from the transaction queue, processing to required format and sending the transaction onto destination.
+Make sure source attributes are correct in config.json
+* For the first time, we will enroll the admin `node enrollAdmin.js`
+* Now, we will register user for our platform  `node registerUser.js`
+* Update/ create corresponding Network.yaml file in /source folder and you are now good to go.
+* Start the blocklistner and this runs forever, listening and processing transactions:  `node shipTransactions.js`
+* NOTE: Use 'forever' node package to keep the script running all time. 
