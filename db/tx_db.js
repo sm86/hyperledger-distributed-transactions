@@ -1,8 +1,8 @@
 var db = require('./couchdb').use('tss_queue');
 
-exports.create = function create(tx, cb) {
-  db.insert(tx, tx.tx_id, cb);
-};
+exports.create = async function create(tx) {
+  await db.insert(tx, tx.tx_id);
+}
 
 exports.getOldestTransaction = function getOldestUnprocessedTransaction(cb) {  
   db.view(
@@ -52,14 +52,20 @@ exports.delete = function deleteRecord(tx,cb) {
   db.destroy(tx.tx_id, tx._rev, cb);
 }
 
-exports.getTransactionByID = function getTransaction(tx_id,cb) {  
-  db.get(tx_id, function (err, result){           
+exports.getTransactionByID = function getTransaction(tx_id) {  
+  return new Promise(function(resolve, reject) {
+    db.get(tx_id, function (err, result){           
       if (err) {
-        cb(err);
+        reject(err);
       }
       else {
-        cb(null,result);
-        return result;
+        resolve(result);
       }
-  });
+    });
+  })
 }
+
+// exports.getTransactionByID = async function getTransaction(tx_id) {  
+//   const res = await db.get(tx_id);
+//   return res;  
+// }

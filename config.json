@@ -1,21 +1,23 @@
 {
   "source": {
     "ca_client": [{
-        "host": "http://localhost:7054",
-        "name" : "ca.example.com" 
+        "host": "https://localhost:7054",
+        "name" : "ca-org1" 
       }
     ],
     "peers" :[
       {
         "host" : "localhost",
-        "port": 7051    
+        "port": 7051 ,
+        "name" : "peer0.org1.example.com"   
       },
       {
         "host" : "localhost",
         "port": 7051    
       }
     ],
-    "username": "user2",
+    "username": "user1",
+    "threshold": 1,
     "mspid" : "Org1MSP",
     "affiliation": "org1.department1",
     "channel" : "mychannel"
@@ -40,7 +42,7 @@
         "port": 7050    
       }
     ],
-    "threshold": 1,
+   
     "username": "user2",
     "mspid" : "Org1MSP",
     "affiliation": "org1.department1",
@@ -49,77 +51,130 @@
   },
   "mapping" : [
     {
-      "filtering_criteria": "writeset.value.colour=='Blue'",
-      "function" : "recordTax",
-      "chaincodeId": "taxChain",
+      "filtering_criteria": "writeset.Color=='Blue'",
+      "function" : "createAsset",
+      "chaincodeId": "mycc",
       "object" : [
         {
-          "argument" : "SSN",
-          "value" : "writeset.value.owner",
+          "argument" : "Owner",
+          "value" : "writeset.Owner",
           "type" : "variable"
         },
         {
-          "argument" : "Asset",
-          "value" : "CAR-BLUE",
+          "argument" : "Type",
+          "value" : "Dark Car",
           "type" : "constant"
         },
         {
-          "argument" : "taxAmount",
-          "value" : "15000",
-          "type" : "constant"
-        },
-        {
-          "argument" : "Reference",
-          "value" : "writeset.key",
+          "argument" : "key",
+          "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
           "type" : "variable"
         },
         {
           "argument" : "Comments",
-          "value" : "fabcar-tss",
+          "value" : "tss-shipped",
           "type" : "constant" 	
         },
         {
-          "argument" : "ID",
+          "argument" : "tx_id",
           "value" : "tx._id",
           "type" : "variable" 	
         }
-        
       ]
     },
     {
-      "filtering_criteria": "writeset.value.colour=='Red'",
-      "function" : "recordTax",
-      "chaincodeId": "taxChain",
+      "filtering_criteria": "writeset.Color=='Black'",
+      "function" : "createAsset",
+      "chaincodeId": "mycc",
       "object" : [
         {
-          "argument" : "SSN",
-          "value" : "writeset.value.owner",
+          "argument" : "Owner",
+          "value" : "writeset.Owner",
           "type" : "variable"
         },
         {
-          "argument" : "Asset",
-          "value" : "CAR-RED",
+          "argument" : "Type",
+          "value" : "Black Car",
           "type" : "constant"
         },
         {
-          "argument" : "taxAmount",
-          "value" : "15000",
-          "type" : "constant"
-        },
-        {
-          "argument" : "Reference",
-          "value" : "writeset.key.substr(3)",
+          "argument" : "key",
+          "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
           "type" : "variable"
         },
         {
           "argument" : "Comments",
-          "value" : "fabcar-tss",
+          "value" : "tss-shipped",
           "type" : "constant" 	
         },
         {
-          "argument" : "ID",
+          "argument" : "tx_id",
           "value" : "tx._id",
+          "type" : "variable" 	
+        }
+      ]
+    },
+    {
+      "filtering_criteria": "writeset.Color=='Red'",
+      "function" : "createAsset",
+      "chaincodeId": "mycc",
+      "object" : [
+        {
+          "argument" : "Owner",
+          "value" : "writeset.Owner",
           "type" : "variable"
+        },
+        {
+          "argument" : "Type",
+          "value" : "Dark Car",
+          "type" : "constant"
+        },
+        {
+          "argument" : "key",
+          "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
+          "type" : "variable"
+        },
+        {
+          "argument" : "Comments",
+          "value" : "tss-shipped",
+          "type" : "constant" 	
+        },
+        {
+          "argument" : "tx_id",
+          "value" : "tx._id",
+          "type" : "variable" 	
+        }
+      ]
+    },
+    {
+      "filtering_criteria": "writeset.Color=='Green'",
+      "function" : "createAsset",
+      "chaincodeId": "mycc",
+      "object" : [
+        {
+          "argument" : "Owner",
+          "value" : "writeset.Owner",
+          "type" : "variable"
+        },
+        {
+          "argument" : "Type",
+          "value" : "Dark Car",
+          "type" : "constant"
+        },
+        {
+          "argument" : "key",
+          "value" : "tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].key",
+          "type" : "variable"
+        },
+        {
+          "argument" : "Comments",
+          "value" : "tss-shipped",
+          "type" : "constant" 	
+        },
+        {
+          "argument" : "tx_id",
+          "value" : "tx._id",
+          "type" : "variable" 	
         }
       ]
     }
